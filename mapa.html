@@ -4,6 +4,7 @@
   <title>Mapa</title>
 </head>
 <body>
+  <input type="text" name="buscador" id="buscador" >
   <div id="map" style="height: 500px; width: 800px">
 
   </div>
@@ -24,6 +25,37 @@
       map: map,
       animation: google.maps.Animation.DROP
     });
+
+    var input = document.getElementById('buscador');
+    console.log(input);
+    var buscador = new google.maps.places.SearchBox(input);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+    var markers = [];
+
+    buscador.addListener('places_changed', function () {
+      var places = buscador.getPlaces();
+      var bounds = new google.maps.LatLngBounds();
+
+      for (index in places) {
+        var place = places[index];
+
+        markers.push(new google.maps.Marker({
+          position: place.geometry.location,
+          map: map,
+          animation: google.maps.Animation.DROP
+        }));
+
+        if (place.geometry.viewport) {
+          bounds.union(place.geometry.viewport);
+        } else {
+          bounds.extend(place.geometry.location);
+        }
+      }
+      map.fitBounds(bounds);
+
+    })
+
     var accionEvento =  (event) => {
       document.getElementById('lista').innerHTML = "";
       var valoresGeo = new google.maps.Geocoder;
@@ -50,7 +82,7 @@
     marker.addListener('dragend', accionEvento);
   }
   </script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyOjncg7kyGq_BHj9UGlO2V2IVP3W3NAI&callback=initMap">
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyOjncg7kyGq_BHj9UGlO2V2IVP3W3NAI&callback=initMap&libraries=places">
   </script>
 </body>
 </html>
