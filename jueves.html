@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Valida</title>
+  <h1>Prueba de validación</h1>
+</head>
+<body>
+  <form class="" action="otro.html" onsubmit = "return validar()">
+    <h3>Letras</h3>
+    <input type="text" name="nombre" id="nombre">
+    <br>
+    <br>
+    <h3>Numeros</h3>
+    <input type="text" name="numero" id="numero">
+    <br>
+    <br>
+    <button type="submit" name="button">Boton</button>
+  </form>
+
+  <script type="text/javascript">
+  var abecedario = 'qwertyuiopasdfghjklzxcvbnm ';
+  var numero = '1234567890';
+
+  function validar (){
+    var dato = document.getElementById ('nombre').value;
+    for (indice in dato) {
+      if (abecedario.indexOf(dato[indice]) ==-1) {
+        alert('Es invalido');
+        break;
+      }
+    }
+  }
+
+  /* for(letra in dato){
+  for(letra2 in abecedario){
+  if(abecedario[letra2] == dato[letra]){
+  break
+}
+
+}
+}*/
+function valida2(e){
+  if (abecedario.indexOf(e.key) == -1) {
+    return false;
+  }
+}
+
+function valida3(e){
+  if (numero.indexOf(e.key) == -1) {
+    return false;
+  }
+}
+
+</script>
+
+</body>
+</html>
